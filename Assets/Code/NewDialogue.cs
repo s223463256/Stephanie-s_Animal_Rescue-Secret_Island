@@ -9,10 +9,22 @@ public class NewDialogue : MonoBehaviour
     // Adding dialogue message to list
     public void AddDialogue(string text, GameObject d_template)
     {
-        // Creating new dialogue message using template
         GameObject message = Instantiate(d_template, transform);
-        // Set text of dialogue message
-        message.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = text;
+        Transform dialogueTextTransform = message.transform.Find("DialogueText");
+
+        if(dialogueTextTransform != null)
+        {
+            TextMeshProUGUI dialogueText = dialogueTextTransform.GetComponent<TextMeshProUGUI>();
+            if(dialogueText != null)
+            {
+                dialogueText.text = text;
+            }
+        }    
+        else
+        {
+            Debug.LogWarning("DialogueText missing");
+        }
+        
         message.SetActive(false);
         dialogueMessages.Add(message);
     }
