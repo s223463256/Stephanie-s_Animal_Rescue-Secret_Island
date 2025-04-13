@@ -2,16 +2,8 @@
   "interactions": [
     {
       "dialogueLines": [
-        "Story 1",
-        "YAP YAP YAP YAP YAP YAP",
-        "THE END"
-      ]
-    },
-    {
-      "dialogueLines": [
-        "Story 2",
-        "Even more YAP YAP YAP YAP YAP YAP",
-        "THE END"
+        {"characterID": "Chicken", "text": "Hey there!"},
+        {"characterID": "Bear", "text": "Hey Chicken!"}
       ]
     }
   ]

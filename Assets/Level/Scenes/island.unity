@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 003a83345ea4723499ec32f5df9447bd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1505,9 +1505,16 @@ MonoBehaviour:
   canva: {fileID: 1402837784}
   characterName: Chicken
   characterImage: {fileID: 21300000, guid: 8b2f716c976b1fa4aa4a18b6ec3b42af, type: 3}
-  story_dialogue: 1
-  JsonFileName: dialogue1
-  interactionStages: []
+  interactionStages:
+  - dialogueLines:
+    - interaction 1 part 1 c
+    - interaction 1 part 2 h
+    - interaction 1 part 3 i
+  - dialogueLines:
+    - interaction 2 part 1 c
+    - interaction 2 part 2 k
+  - dialogueLines:
+    - interaction 3 part 1 e
 --- !u!135 &848825284
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1823,7 +1830,7 @@ GameObject:
   - component: {fileID: 1278081812}
   - component: {fileID: 1278081811}
   - component: {fileID: 1278081810}
-  - component: {fileID: 1278081809}
+  - component: {fileID: 1278081813}
   m_Layer: 0
   m_Name: Interaction Sphere
   m_TagString: Untagged
@@ -1846,25 +1853,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 349183213}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1278081809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278081807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 527c4a9e39805f54da11fb1ce89d2404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  d_template: {fileID: 1756237837}
-  canva: {fileID: 1402837784}
-  characterName: Bear
-  characterImage: {fileID: 21300000, guid: 6e888010c19637449af16fadd158bae4, type: 3}
-  story_dialogue: 1
-  JsonFileName: dialogue2
-  interactionStages: []
 --- !u!135 &1278081810
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1939,6 +1927,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278081807}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1278081813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278081807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47cb34678e0357444a4fc3b4ccbf5411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  d_template: {fileID: 1756237837}
+  canva: {fileID: 1402837784}
+  JsonFileName: dialogue1
 --- !u!1 &1293725568
 GameObject:
   m_ObjectHideFlags: 0

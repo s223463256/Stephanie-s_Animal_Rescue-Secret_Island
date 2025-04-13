@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using Unity.Multiplayer.Center.Common.Analytics;
-public class NPCSystem : MonoBehaviour
+public class NPCDialogueSystem : MonoBehaviour
 {
     public GameObject d_template;
     public GameObject canva;
@@ -12,29 +12,17 @@ public class NPCSystem : MonoBehaviour
     private bool player_detection = false;
     private bool dialogueTriggered = false;
     private GameObject currentDialogue;
-    public bool story_dialogue = false;
-    public string JsonFileName;
     private NewDialogue dialogueScript;
     // Store multiple dialogues for npcs
-    public List<InteractionDataType> interactionStages = new List<InteractionDataType>();
     private int interactionCount = 0;
     // Serializable class storing multiple lines of dialogue in the interaction stage
     [System.Serializable]
-    public class InteractionDataType{
-        public List<string> dialogueLines;
-    }
-
-    [System.Serializable]
-    public class InteractionSet
+    public class InteractionDataType
     {
         public List<string> dialogueLines;
     }
 
-    [System.Serializable]
-    public class StoryDialogueData
-    {
-        public List<InteractionSet> interactions;
-    }
+    public List<InteractionDataType> interactionStages = new List<InteractionDataType>();
     
 
     // Function to detect if player is detected and no dialogue is playing to start a new dialogue
@@ -74,55 +62,28 @@ public class NPCSystem : MonoBehaviour
             Destroy(currentDialogue);
         }
 
-        List<string> selectedDialogue;
-
-        if (story_dialogue)
+        if (interactionStages.Count == 0)
         {
-            TextAsset jsonText = Resources.Load<TextAsset>($"StoryDialogue/{JsonFileName}");
-            if (jsonText == null)
-            {
-                Debug.LogError("Story JSON file not found!");
-                return;
-            }
-            
-            StoryDialogueData storyData = JsonUtility.FromJson<StoryDialogueData>(jsonText.text);
-
-            // Clamp index to available interactions
-            int stageIndex = Mathf.Clamp(interactionCount, 0, storyData.interactions.Count - 1);
-            selectedDialogue = storyData.interactions[stageIndex].dialogueLines;
-        }
-        else
-        {
-            // Ensure the NPC dialogue is available logging errors
-            if (interactionStages.Count == 0)
-            {
-                Debug.LogError("NPC has no dialogue");
-                return;
-            }
-            // Selecting dialogue stage based on number of interactions
-            int stageIndex = Mathf.Clamp(interactionCount, 0, interactionStages.Count - 1);
-            selectedDialogue = interactionStages[stageIndex].dialogueLines;
-
+            Debug.LogError("Npc has no current dialogue");
+            return;
         }
 
-        // Create new dialogue
+        int stageIndex = Mathf.Clamp(interactionCount, 0,  interactionStages.Count - 1);
+        List<string> selectedDialogue = interactionStages[stageIndex].dialogueLines;
+
         currentDialogue = new GameObject("DialogueContrainer");
         currentDialogue.transform.SetParent(canva.transform, false);
-
         dialogueScript = currentDialogue.AddComponent<NewDialogue>();
 
         GameObject templateInstance = Instantiate(d_template, currentDialogue.transform);
         CharacterUI(templateInstance);
 
-        // Adding each line of dialogue to dialogue system
         foreach (string line in selectedDialogue)
         {
             dialogueScript.AddDialogue(line, templateInstance);
         }
-        // Display dialogue
-        dialogueScript.StartDialogue();
-        // Changes dialogue will need to add condition if want to only move dialogue if part of the game is completed
-        interactionCount++;
+            dialogueScript.StartDialogue();
+            interactionCount++;
     }
     // Detect when player enters npc bubble
     private void OnTriggerEnter(Collider other)
